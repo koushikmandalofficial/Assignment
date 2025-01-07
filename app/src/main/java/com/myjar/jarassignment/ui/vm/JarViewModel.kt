@@ -25,11 +25,10 @@ class JarViewModel : ViewModel() {
 
     fun fetchData() {
         viewModelScope.launch {
-            repository.fetchResults()
-                .collect { data ->
-                    _listStringData.value = data
-                    Log.d("TAG", "fetchData: ${_listStringData.value}")
-                }
+            repository.fetchResults().collect { results ->
+                _listStringData.value = results // Update the state flow with the fetched data
+                Log.d("JarViewModel", "Fetched results: $results")
+            }
         }
     }
 
@@ -37,5 +36,9 @@ class JarViewModel : ViewModel() {
         viewModelScope.launch {
             _navigateToItem.emit(id)
         }
+    }
+
+    fun clearNavigation() {
+        _navigateToItem.value = null
     }
 }
