@@ -45,6 +45,7 @@ class MainActivity : ComponentActivity() {
                     val intent = Intent(this@MainActivity, DetailActivity::class.java)
                     intent.putExtra("itemId", it)
                     startActivity(intent)
+                    viewModel.clearNavigation() // Clear navigation state
                 }
             }
         }
@@ -55,7 +56,7 @@ class MainActivity : ComponentActivity() {
         adapter = ItemAdapter { selectedItem ->
             viewModel.navigateToItemDetail(selectedItem.id)
         }
-
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
