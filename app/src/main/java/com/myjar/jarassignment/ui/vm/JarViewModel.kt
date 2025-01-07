@@ -1,5 +1,6 @@
 package com.myjar.jarassignment.ui.vm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myjar.jarassignment.createRetrofit
@@ -25,6 +26,10 @@ class JarViewModel : ViewModel() {
     fun fetchData() {
         viewModelScope.launch {
             repository.fetchResults()
+                .collect { data ->
+                    _listStringData.value = data
+                    Log.d("TAG", "fetchData: ${_listStringData.value}")
+                }
         }
     }
 
